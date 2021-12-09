@@ -1,4 +1,22 @@
-import requests
+import requests, datetime
+from tkinter import *
+
+window = Tk()
+window.geometry('800x600+200+100')
+window.title('SpaceX API')
+window.mainloop()
+
+class Launches:
+    def getNextLaunch(self):
+        endpoint = 'https://api.spacexdata.com/v3/launches/next'
+        response = requests.get(endpoint)
+        data = response.json()
+        timestamp = datetime.datetime.fromtimestamp(data['launch_date_unix'])
+        text = 'Миссия: ' + data['mission_name'] + '\nДата запуска: ' + timestamp.strftime('%Y-%m-%d %H:%M:%S')
+        lbl = Label(window, text = text)
+        lbl.grid(column=0, row=0)
+        window.mainloop()
+
 
 class Rockets():
     def getRockets(self):
